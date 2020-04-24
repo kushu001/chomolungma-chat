@@ -11,7 +11,14 @@ import javafx.stage.Stage;
 
 public class ChatWindow {
 
+
+    public static ClientSocket client = new ClientSocket();
+
     public static void initChatWindow(){
+
+        //建立连接
+        client.connect();
+
         Stage stage = new Stage();
         GridPane gridPane = new GridPane();
         TextArea messagesArea = new TextArea();
@@ -58,7 +65,11 @@ class SendButtonAction implements EventHandler {
 
     @Override
     public void handle(Event event) {
-        String messages =  messagesArea.getText()+"\n"+ messageArea.getText();
+
+        String msg = ChatWindow.client.sendMessage(messageArea.getText()+"\n");
+        //String msg = ChatWindow.client.receiveMessage();
+        System.out.println(msg);
+        String messages =  messagesArea.getText()+"\n"+ msg;
         messageArea.setText(null);
         messagesArea.setText(messages);
 
