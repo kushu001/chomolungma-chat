@@ -32,13 +32,17 @@ public class ClientSocket {
         }
 
         String message = null;
-        try {
 
+        try {
             osw.write(str);
             osw.flush();
-            while(true) {
-                message = br.readLine();
+
+            String line =null;
+            while ((line = br.readLine()) != null){
+                message = line;
+
             }
+
         } catch (IOException e) {
             e.printStackTrace();
         }
