@@ -24,12 +24,9 @@ public class Login extends Application {
         Button submit = new Button("登录");
 
         submit.setOnAction(event -> Platform.runLater(()->{
-
-
-            ChatWindow.initChatWindow();
+            ChatWindow chatWindow = new ChatWindow();
+            chatWindow.initChatWindow();
             stage.close();
-
-
         }));
         gridPane.add(userName,0,0);
         gridPane.add(password,0,1);

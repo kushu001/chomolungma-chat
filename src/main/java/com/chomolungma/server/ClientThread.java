@@ -1,10 +1,7 @@
 package com.chomolungma.server;
 
-import jdk.internal.util.xml.impl.Input;
-
 import java.io.*;
 import java.net.Socket;
-import java.util.List;
 
 public class ClientThread extends Thread{
 
@@ -34,12 +31,14 @@ public class ClientThread extends Thread{
 
     @Override
     public void run() {
-        BufferedReader br = null;
+        System.out.println(this.getName()+":启动了");
         try {
-            String line=null;
+            BufferedReader br = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+            String line= null;
             while((line=br.readLine())!=null)
             {
                 System.out.println(line);
+
                 ChatManager.GetChatManager().Send(this, line);
             }
             br.close();

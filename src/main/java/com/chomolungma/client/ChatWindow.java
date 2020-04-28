@@ -11,13 +11,7 @@ import javafx.stage.Stage;
 
 public class ChatWindow {
 
-
-    public static ClientSocket client = new ClientSocket();
-
-    public static void initChatWindow(){
-
-        //建立连接
-        client.connect();
+    public  void initChatWindow(){
 
         Stage stage = new Stage();
         GridPane gridPane = new GridPane();
@@ -33,7 +27,9 @@ public class ChatWindow {
         Button sendButton = new Button();
         sendButton.setPrefSize(50,100);
         sendButton.setText("发送");
-        sendButton.setOnAction(new SendButtonAction(messagesArea,messageArea));
+        ClientSocket clientSocket = new ClientSocket(messagesArea);
+        clientSocket.connect();
+        sendButton.setOnAction(new SendButtonAction(messageArea,clientSocket));
 
         gridPane.setPrefSize(450,500);
 
@@ -49,29 +45,26 @@ public class ChatWindow {
         stage.setWidth(450);
         stage.setHeight(500);
         stage.show();
+
     }
+
 }
 
 
 class SendButtonAction implements EventHandler {
 
     private TextArea messageArea;
-    private TextArea messagesArea;
+    private ClientSocket clientSocket;
 
-    public SendButtonAction(TextArea messagesArea,TextArea messageArea){
+    public SendButtonAction(TextArea messageArea,ClientSocket clientSocket){
         this.messageArea = messageArea;
-        this.messagesArea = messagesArea;
+        this.clientSocket = clientSocket;
+
     }
 
     @Override
     public void handle(Event event) {
-
-        String msg = ChatWindow.client.sendMessage(messageArea.getText()+"\n");
-        //String msg = ChatWindow.client.receiveMessage();
-        System.out.println(msg);
-        String messages =  messagesArea.getText()+"\n"+ msg;
-        messageArea.setText(null);
-        messagesArea.setText(messages);
-
+        clientSocket.sendMessage(messageArea.getText());
+        messageArea.setText("");
     }
 }

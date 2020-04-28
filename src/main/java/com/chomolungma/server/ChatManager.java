@@ -36,9 +36,8 @@ public class ChatManager {
         Iterator<String> keys = clientCache.keySet().iterator();
         while(keys.hasNext()){
             String key = keys.next();
-            if (!cs.getName().equals(key)){
-                clientCache.get(key).Out(str);
-            }
+            clientCache.get(key).Out(str);
+
         }
 
 

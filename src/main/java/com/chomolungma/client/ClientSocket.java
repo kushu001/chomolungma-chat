@@ -1,19 +1,28 @@
 package com.chomolungma.client;
 
-import java.io.*;
+
+import javafx.scene.control.TextArea;
+
+import java.io.BufferedWriter;
+import java.io.IOException;
+import java.io.OutputStreamWriter;
 import java.net.Socket;
 
 public class ClientSocket {
 
     private Socket socket;
     private BufferedWriter osw;
-    private BufferedReader br;
+    private TextArea messagesArea;
+
+    public ClientSocket(TextArea messagesArea){
+        this.messagesArea= messagesArea;
+    }
+
     // 建立连接
     public void connect(){
         try {
             socket = new Socket("127.0.0.1",9988);
-            osw = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream()));
-            br = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+            new OutputSocketThread(socket,messagesArea).start();
         } catch (IOException e) {
             e.printStackTrace();
         }finally {
@@ -24,54 +33,27 @@ public class ClientSocket {
 
     }
 
-
     // 发送消息
-    public String sendMessage(String str){
+    public void sendMessage(String str){
         if (socket == null){
             System.out.println("未建立连接");
         }
 
-        String message = null;
-
         try {
-            osw.write(str);
+            osw = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream()));
+            osw.write(str+"\n");
             osw.flush();
-
-            String line =null;
-            while ((line = br.readLine()) != null){
-                message = line;
-
-            }
-
         } catch (IOException e) {
             e.printStackTrace();
         }
 
-        return message;
     }
 
-    //接收消息
-    public String receiveMessage(){
-        if (socket == null){
-            System.out.println("未建立连接");
-            return "";
-        }
 
-
-
-        String message = null;
-        try {
-
-
-            message = br.readLine();
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        return message;
-
+    public Socket getSocket(){
+        return this.socket;
     }
+
 
 
 }

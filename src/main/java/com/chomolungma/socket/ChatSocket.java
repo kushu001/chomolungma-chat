@@ -39,7 +39,7 @@ public class ChatSocket extends Thread {
             while((line=br.readLine())!=null)
             {
                 System.out.println(line);
-                org.chomolungma.socket.ChatManager.GetChatManager().Send(this, line);
+                ChatManager.GetChatManager().Send(this, line);
             }
             br.close();
         } catch (UnsupportedEncodingException e) {

@@ -10,8 +10,8 @@ public class ChatManager {
      *单例化
      */
     private ChatManager() {}
-    private static final org.chomolungma.socket.ChatManager cm=new org.chomolungma.socket.ChatManager();
-    public static org.chomolungma.socket.ChatManager GetChatManager() {
+    private static final ChatManager cm=new ChatManager();
+    public static ChatManager GetChatManager() {
         return cm;
     }
 
@@ -26,13 +26,6 @@ public class ChatManager {
 
     //群发消息
     public void Send(ChatSocket cs,String str) {
-       /* for (int i = 0; i < vector.size(); i++) {
-            ChatSocket chatsocket=(ChatSocket)vector.get(i);
-            if(!cs.equals(chatsocket))
-            {
-                chatsocket.Out(str);
-            }
-        }*/
          Iterator<String> keys = clientCache.keySet().iterator();
          while(keys.hasNext()){
              String key = keys.next();
