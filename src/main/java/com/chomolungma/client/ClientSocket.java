@@ -13,9 +13,11 @@ public class ClientSocket {
     private Socket socket;
     private BufferedWriter osw;
     private TextArea messagesArea;
+    private String name;
 
-    public ClientSocket(TextArea messagesArea){
+    public ClientSocket(TextArea messagesArea,String name){
         this.messagesArea= messagesArea;
+        this.name = name;
     }
 
     // 建立连接
@@ -41,7 +43,7 @@ public class ClientSocket {
 
         try {
             osw = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream()));
-            osw.write(str+"\n");
+            osw.write(name+":\n"+str+"EOF\n");
             osw.flush();
         } catch (IOException e) {
             e.printStackTrace();

@@ -11,7 +11,7 @@ import javafx.stage.Stage;
 
 public class ChatWindow {
 
-    public  void initChatWindow(){
+    public  void initChatWindow(String name){
 
         Stage stage = new Stage();
         GridPane gridPane = new GridPane();
@@ -27,7 +27,7 @@ public class ChatWindow {
         Button sendButton = new Button();
         sendButton.setPrefSize(50,100);
         sendButton.setText("发送");
-        ClientSocket clientSocket = new ClientSocket(messagesArea);
+        ClientSocket clientSocket = new ClientSocket(messagesArea,name);
         clientSocket.connect();
         sendButton.setOnAction(new SendButtonAction(messageArea,clientSocket));
 

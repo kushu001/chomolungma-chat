@@ -25,7 +25,7 @@ public class Login extends Application {
 
         submit.setOnAction(event -> Platform.runLater(()->{
             ChatWindow chatWindow = new ChatWindow();
-            chatWindow.initChatWindow();
+            chatWindow.initChatWindow(userNameTextField.getText());
             stage.close();
         }));
         gridPane.add(userName,0,0);
